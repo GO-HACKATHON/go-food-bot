@@ -34,7 +34,15 @@
 + menu * apa (saja|aja)
 - Ini menu <star1>
 
-+ (liat|lihat) menu (aja|saja|deh)
++ (liat|lihat) menu (aja|saja|deh|dong)
+- OK! Ini menunya:
+- Baiklah! Ini menu yang kita punya:
+
++ (liat|lihat) menunya
+- OK! Ini menunya:
+- Baiklah! Ini menu yang kita punya:
+
++ mau dong menu*
 - OK! Ini menunya:
 - Baiklah! Ini menu yang kita punya:
 
@@ -44,4 +52,4 @@
 - Baiklah! Ini menu yang kita punya:
 
 + *
-- Ma'af saya tidak boleh basa basi
+- Maaf saya tidak mengerti
