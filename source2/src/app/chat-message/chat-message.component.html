@@ -1,0 +1,25 @@
+<md-card >      
+  <md-card-header *ngIf="isRegularTextMessage() || isTypingsMessage()">
+    <div md-card-avatar class="example-header-image">
+      <img md-card-avatar style="height:60px; width: 60px" [src]="message.User.PicUrl" >
+    </div>
+    <md-card-title>{{message.User.Username}}{{getSentTimeString()}} </md-card-title>
+    <md-card-subtitle>{{message.Message}}</md-card-subtitle>
+  </md-card-header>      
+
+  
+  <md-card-content *ngIf="isShowDishesTypesMessage()">
+    <div style="width:2000px; height: 40px">
+      <button md-button (click)="raiseShowChildDishes(dishesType)" *ngFor="let dishesType of message.data ">{{dishesType.Name}}</button>
+    </div>
+  </md-card-content>  
+
+  <md-card-content *ngIf="isShowFoodMenuMessage()">
+    <div style="width:2000px; height: 40px">
+      <button md-button *ngFor="let foodMenu of message.data ">{{foodMenu.Name}} - {{foodMenu.Price}}</button>
+    </div>
+  </md-card-content>  
+  
+</md-card>
+
+

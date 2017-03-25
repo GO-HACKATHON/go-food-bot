@@ -1,0 +1,47 @@
+! version = 2.0
+
++ mulai
+- Halo Norma! Kamu mau langsung pesan atau lihat menu dulu?
+
++ selain itu [*]
+- Selain itu kamu bisa lihat riwayat pembelianmu
+
++ lihat (menu|menuu) [yang] (harganya|harganay|hargany) (#|di atas #|diatas #|lebih #|lebih dari #)
+- Ini list menu yang harganya diatas <star>
+
++ lihat (menu|menuu) [yang] (harganya|harganay|hargany) (#|di bawah #|dibawah #|kurang dari #|kurang #)
+- Ini list menu yang harganya dibawah <star>
+
++ kamu punya * apa [*]
+- aku punya <star>
+
++ lihat menu *
+- Ini menu <star1>
+
++ liat menu *
+- Ini menu <star1>
+
++ list menu *
+- Ini menu <star1>
+
++ list *
+- Ini menu <star1>
+
++ menu *
+- Ini menu <star1>
+
+
++ menu * apa (saja|aja)
+- Ini menu <star1>
+
++ (liat|lihat) menu (aja|saja|deh)
+- OK! Ini menunya:
+- Baiklah! Ini menu yang kita punya:
+
+
++ [*] menu 
+- OK! Ini menunya:
+- Baiklah! Ini menu yang kita punya:
+
++ *
+- Ma'af saya tidak boleh basa basi

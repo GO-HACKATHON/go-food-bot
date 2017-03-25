@@ -1,0 +1,18 @@
+<div fxLayout="column" >
+  <md-list>
+    
+      <md-card *ngFor="let message of Messages">
+        <app-chat-message (showChildDishes)="doShowChildDishes($event)" [message]="message" ></app-chat-message>               
+      </md-card>
+        
+  </md-list>
+  <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start stretch">
+    <md-input-container fxFlex class="example-full-width">
+      <input fxFlex mdInput placeholder="Pesan anda" [(ngModel)]="currentMessage" >
+    </md-input-container>
+
+    <button fxFlex="10" (click)="sendMessage()"  md-raised-button>Send</button>
+
+  </div>
+  
+</div>
