@@ -8,7 +8,8 @@
     "start": "ng serve",
     "test": "ng test",
     "pree2e": "webdriver-manager update --standalone false --gecko false",
-    "e2e": "protractor"
+    "e2e": "protractor",
+    "mytest": "tsc -p src/test && mocha src/test/lib/test"
   },
   "private": true,
   "dependencies": {
@@ -20,8 +21,14 @@
     "@angular/platform-browser": "^2.3.1",
     "@angular/platform-browser-dynamic": "^2.3.1",
     "@angular/router": "^3.3.1",
+    "@types/chai": "^3.4.35",
+    "angular2-onsenui": "^1.0.0-rc.6",
+    "chai": "^3.5.0",
     "core-js": "^2.4.1",
-    "rxjs": "^5.0.1",
+    "moment": "^2.18.1",
+    "onsenui": "^2.2.0",
+    "rivescript": "^1.17.2",
+    "rxjs": "^5.2.0",
     "ts-helpers": "^1.1.1",
     "zone.js": "^0.7.2"
   },

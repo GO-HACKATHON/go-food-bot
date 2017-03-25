@@ -18,9 +18,13 @@
       "tsconfig": "tsconfig.json",
       "prefix": "app",
       "styles": [
-        "styles.css"
+        "styles.css",
+        "../node_modules/onsenui/css/onsen-css-components.css",
+        "../node_modules/onsenui/css/onsenui.css"        
       ],
-      "scripts": [],
+      "scripts": [
+        "../node_modules/onsenui/js/onsenui.js"        
+      ],
       "environments": {
         "source": "environments/environment.ts",
         "dev": "environments/environment.ts",
