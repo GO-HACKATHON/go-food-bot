@@ -23,6 +23,7 @@
         "../node_modules/onsenui/css/onsenui.css"        
       ],
       "scripts": [
+        "../node_modules/jquery/dist/jquery.js",
         "../node_modules/onsenui/js/onsenui.js"        
       ],
       "environments": {

@@ -25,6 +25,7 @@
     "angular2-onsenui": "^1.0.0-rc.6",
     "chai": "^3.5.0",
     "core-js": "^2.4.1",
+    "jquery": "^3.2.1",
     "moment": "^2.18.1",
     "onsenui": "^2.2.0",
     "rivescript": "^1.17.2",

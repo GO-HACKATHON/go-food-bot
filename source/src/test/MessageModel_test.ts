@@ -8,7 +8,7 @@ describe("MessageModel", function(){
     describe("Creating a new message", function(){
         it("must expect non empty message", function(){
             try {
-                let msg:MessageModel = new MessageModel("", MessageTypes.RegularText)                
+                let msg:MessageModel = new MessageModel("", MessageTypes.RegularText, null)                
             } catch (error) {
                 assert.isNotNull(error, "error must not null");
                 assert.equal(new Error("Message must not empty").message, error.message);
@@ -18,7 +18,7 @@ describe("MessageModel", function(){
             
         })
         it("must assign correct sentTime value", function(){
-            let msg:MessageModel = new MessageModel("adasd", MessageTypes.RegularText)
+            let msg:MessageModel = new MessageModel("adasd", MessageTypes.RegularText, null)
             
 
             let now:moment.Moment = moment();

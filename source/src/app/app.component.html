@@ -9,7 +9,7 @@
           <div class="center">
             <div class="list-item__title">
               {{message.User.Username}}
-              <span style="color:gray;font-size: small">{{getMessageTime(message)}}</span>
+              <span *ngIf="isRegularText(message)" style="color:gray;font-size: small">{{getMessageTime(message)}}</span>
             </div>
             <span class="list-item__subtitle">{{message.Message}}</span>
           </div>

@@ -15,7 +15,7 @@ describe("GofoodBot", function () {
             return __awaiter(this, void 0, void 0, function* () {
                 let bot = models_1.GofoodBot.Create();
                 let greetings = yield bot.sayGreetings().toPromise();
-                chai_1.assert.equal(greetings.Message, "Halo Irwansyah! Kamu mau langsung pesan atau lihat menu?");
+                chai_1.assert.equal(greetings.Message, "Halo Norma! Kamu mau langsung pesan atau lihat menu?");
                 chai_1.assert.equal(greetings.User.PicUrl, "https://mustafit.files.wordpress.com/2017/01/gofood.jpg");
                 chai_1.assert.equal(greetings.User.Username, "Go-food Bot");
             });

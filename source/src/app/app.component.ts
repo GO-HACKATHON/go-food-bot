@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import {MessageModel, UserModel, MessageTypes, GofoodBot} from '../models';
-import  * as moment from 'moment';
+import {MessageModel, UserModel, MessageTypes, GofoodBot, IUserRetriever, DummyCurrentUserRetriever} from '../models';
+import * as moment from 'moment';
+import * as Rx from 'rxjs/Rx';
 
 @Component({
   selector: 'app-root',
@@ -12,21 +13,32 @@ export class AppComponent {
 
   public Messages:MessageModel[] = [];
   public currentMessage:string = "";
-  protected bot:GofoodBot = GofoodBot.Create()
+  protected bot:GofoodBot = GofoodBot.Create();
 
+  protected currentUser:UserModel = null;
+
+
+  protected getCurrentUserRetriever():IUserRetriever{
+    return new DummyCurrentUserRetriever();
+  }
 
   ngOnInit(){
 
-    return this.bot
-            .getTypingsMessage()
+    return this.getCurrentUserRetriever().getUser()
+            .map((currentUser:UserModel) => {
+              this.currentUser = currentUser;
+            })
+            .flatMap(() => this.bot.getTypingsMessage())    
             .map((typingsMessage:MessageModel) =>{
               let messageIndex = this.Messages.push(typingsMessage);
 
               return messageIndex -1;
             })
-            .delay(5000)            
+            .delay(3000)            
             .flatMap((typingsMessageIndex:number) =>{
-              return this.bot.sayGreetings()
+              return this.bot
+                      .init()
+                      .concatMap(() => this.bot.sayGreetings()) 
                       .map((typingsMessage:MessageModel) =>{
                         this.Messages[typingsMessageIndex] = typingsMessage;
                       })
@@ -34,6 +46,11 @@ export class AppComponent {
             })
             .toPromise();
 
+  }
+
+
+  isRegularText(message:MessageModel){
+    return message.MessageType === MessageTypes.RegularText;
   }
 
   getMessageTime(message:MessageModel){
@@ -47,13 +64,28 @@ export class AppComponent {
   }
 
   sendMessage(){
-    let message1:MessageModel = new MessageModel(this.currentMessage, MessageTypes.RegularText);
-    message1.User.PicUrl = "https://avatars0.githubusercontent.com/u/393533?v=3&s=460";
-    message1.User.Username = "Me";
-    message1.SentTime = moment().unix()
 
-    this.Messages.push(message1);
-
+    let userMessage:MessageModel = new MessageModel(this.currentMessage, MessageTypes.RegularText, this.currentUser);
+    this.Messages.push(userMessage);
     this.currentMessage = "";
+
+    return this.bot       
+            .getTypingsMessage()     
+            .map((typingsMessage:MessageModel) =>{
+              let messageIndex = this.Messages.push(typingsMessage);
+
+              return messageIndex -1;
+            })
+            .delay(3000)            
+            .flatMap((messageIndex:number) => this.bot.getReply(userMessage).map((replyMessage:MessageModel) => {
+              return {
+                messageIndex,
+                replyMessage
+              }
+            }))
+            .map((combined:any) => {
+              this.Messages[combined.messageIndex] = combined.replyMessage;
+            })
+            .toPromise()
   }
 }
