@@ -22,7 +22,8 @@ const RiveScript = require("rivescript");
 const BrainFiles = [
     "assets/brain/greetings.rive",
     "assets/brain/menu.rive",
-    "assets/brain/free-ongkir.rive"
+    "assets/brain/free-ongkir.rive",
+    "assets/brain/pesan.rive"
 ]
 
 export class GofoodBot{
@@ -128,6 +129,25 @@ export class GofoodBot{
                 }
                 else if(botReply.startsWith("Ini menu")){
                     let queryText:string = botReply.substr("Ini menu".length);
+                    replyModel = new MessageModel(botReply, MessageTypes.RegularText, botUser);
+
+
+                    this.menuQueryExecutor.query(queryText)
+                        .map((results:FoodMenuModel[]) => {
+                            let commandMessage:MessageModel = new MessageModel("SHOW_FOOD_MENU", MessageTypes.Command, botUser);
+                            commandMessage.data = results;
+                            replyModel.followingMessages.push(commandMessage);
+                            
+                            console.log("results:", results);
+                        })
+                        .subscribe(() => {
+                            s.next(replyModel);
+                            s.complete();                                
+                        })
+                    
+                }
+                else if(botReply.startsWith("Ini daftar")){
+                    let queryText:string = botReply.substr("Ini daftar".length);
                     replyModel = new MessageModel(botReply, MessageTypes.RegularText, botUser);
 
 

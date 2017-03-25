@@ -18,7 +18,8 @@ var options = {
     minMatchCharLength: 1,
     keys: [
         "Name",
-        "restaurant.Name"
+        "restaurant.Name",
+        'Price'
     ]
 };
 

@@ -1,0 +1,20 @@
+! version = 2.0
+
++ pesan [saja]
+- OK! Silahkan, kamu mau pesan apa?
+- Baik! Silahkan disebut pesanannya
+
+
++ langsung pesan [*]
+- OK! Silahkan, kamu mau pesan apa?
+- Baik! Silahkan disebut pesanannya
+
++ lagnsung pesan [*]
+- OK! Silahkan, kamu mau pesan apa?
+- Baik! Silahkan disebut pesanannya
+
++ pesan *
+- Ini daftar <star1>
+
++ *
+- Maaf saya tidak mengerti
