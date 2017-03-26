@@ -2,7 +2,7 @@
   <md-list>
     
       <md-card *ngFor="let message of Messages">
-        <app-chat-message (showChildDishes)="doShowChildDishes($event)" [message]="message" ></app-chat-message>               
+        <app-chat-message (confirmOrderingFoodMenu)="doConfirmOrderingFoodMenu($event)" (showChildDishes)="doShowChildDishes($event)" [message]="message" ></app-chat-message>               
       </md-card>
         
   </md-list>

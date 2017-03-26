@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 
-import {MessageModel, MessageTypes,DishesTypeModel} from '../../models';
+import {MessageModel, MessageTypes,DishesTypeModel, FoodMenuModel} from '../../models';
 
 import * as moment from 'moment';
 
@@ -20,6 +20,9 @@ export class ChatMessageComponent implements OnInit {
   @Output() 
   public showChildDishes:EventEmitter<DishesTypeModel> = new EventEmitter();
 
+  @Output()
+  public confirmOrderingFoodMenu:EventEmitter<FoodMenuModel> = new EventEmitter();
+
   constructor() { }
 
   ngOnInit() {
@@ -28,6 +31,11 @@ export class ChatMessageComponent implements OnInit {
   raiseShowChildDishes(dishesType:DishesTypeModel){
     this.showChildDishes.next(dishesType);
   }
+
+  raiseConfirmOrderingFoodMenu(foodMenu:FoodMenuModel){
+    this.confirmOrderingFoodMenu.next(foodMenu);
+  }
+
   getSentTimeString(){
     if(this.message.MessageType === MessageTypes.RegularText){
       return " - " + moment.unix(this.message.SentTime).format("LLL");

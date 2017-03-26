@@ -16,7 +16,7 @@
 
   <md-card-content *ngIf="isShowFoodMenuMessage()">
     <div style="width:2000px; height: 40px">
-      <button md-button *ngFor="let foodMenu of message.data ">{{foodMenu.Name}} - {{foodMenu.Price}}</button>
+      <button md-button (click)="raiseConfirmOrderingFoodMenu(foodMenu)" *ngFor="let foodMenu of message.data ">{{foodMenu.Name}} - {{foodMenu.Price}}</button>
     </div>
   </md-card-content>  
   

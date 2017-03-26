@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import {MessageModel, DishesTypeModel, UserModel, MessageTypes, GofoodBot, IUserRetriever, DummyCurrentUserRetriever} from '../models';
+import {MessageModel, DishesTypeModel, FoodMenuModel, UserModel, MessageTypes, GofoodBot, IUserRetriever, DummyCurrentUserRetriever} from '../models';
 import * as moment from 'moment';
 import * as Rx from 'rxjs/Rx';
 
@@ -114,35 +114,47 @@ export class AppComponent {
     }
   }
 
+  doConfirmOrderingFoodMenu($event){
+    let foodMenu:FoodMenuModel = $event;
+    this.currentMessage = `aku pesan ${foodMenu.Name} dari ${foodMenu.restaurant.Name}, ${foodMenu.restaurant.Area}`
+
+    this.sendMessage();
+    
+  }
+
   sendMessage(){
 
-    let userMessage:MessageModel = new MessageModel(this.currentMessage, MessageTypes.RegularText, this.currentUser);
-    this.pushMessage(userMessage);
-    this.currentMessage = "";
+    if(this.currentMessage.trim().length > 0){
+      let userMessage:MessageModel = new MessageModel(this.currentMessage, MessageTypes.RegularText, this.currentUser);
+      this.pushMessage(userMessage);
+      this.currentMessage = "";
 
-    return this.bot                   
-            .getTypingsMessage()     
-            .delay(2000)
-            .map((typingsMessage:MessageModel) =>{
-              return this.pushMessage(typingsMessage);
-            })
-            .delay(3000)            
-            .flatMap((messageIndex:number) => this.bot.getReply(userMessage).map((replyMessage:MessageModel) => {
-              return {
-                messageIndex,
-                replyMessage
-              }
-            }))
-            .map((combined:any) => {
-              this.replaceMessage(combined.messageIndex, combined.replyMessage)
-
-              let followingMessages:MessageModel[] = combined.replyMessage.followingMessages;
-
-              followingMessages.forEach((followingMessage:MessageModel) => {
-                  this.pushMessage(followingMessage);
+      return this.bot                   
+              .getTypingsMessage()     
+              .delay(2000)
+              .map((typingsMessage:MessageModel) =>{
+                return this.pushMessage(typingsMessage);
               })
+              .delay(3000)            
+              .flatMap((messageIndex:number) => this.bot.getReply(userMessage).map((replyMessage:MessageModel) => {
+                return {
+                  messageIndex,
+                  replyMessage
+                }
+              }))
+              .map((combined:any) => {
+                this.replaceMessage(combined.messageIndex, combined.replyMessage)
 
-            })
-            .toPromise()
+                let followingMessages:MessageModel[] = combined.replyMessage.followingMessages;
+
+                followingMessages.forEach((followingMessage:MessageModel) => {
+                    this.pushMessage(followingMessage);
+                })
+
+              })
+              .toPromise()
+    }
+
   }
+
 }

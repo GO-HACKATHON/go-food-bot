@@ -13,6 +13,20 @@
 - OK! Silahkan, kamu mau pesan apa?
 - Baik! Silahkan disebut pesanannya
 
++ aku pesan * dari *
+- Kamu yakin mau pesan <star1> dari <star2> ?
+
++ ya
+% kamu yakin mau pesan *
+- Ma'af saat ini saya belum bisa terima order
+- Mohon ma'af, ya waktunya tidak cukup untuk membuatkan ordering systemnya
+
+
++ tidak
+% kamu yakin mau pesan *
+- OK! 
+- Siap!
+
 + pesan *
 - Ini daftar <star1>
 
