@@ -45,7 +45,7 @@ export class AppComponent {
               return this.pushMessage(typingsMessage);
 
             })
-            .delay(3000)            
+            .delay(1500)            
             .flatMap((typingsMessageIndex:number) =>{
               return this.bot
                       .init()
@@ -131,11 +131,11 @@ export class AppComponent {
 
       return this.bot                   
               .getTypingsMessage()     
-              .delay(2000)
+              .delay(1500)
               .map((typingsMessage:MessageModel) =>{
                 return this.pushMessage(typingsMessage);
               })
-              .delay(3000)            
+              .delay(1500)            
               .flatMap((messageIndex:number) => this.bot.getReply(userMessage).map((replyMessage:MessageModel) => {
                 return {
                   messageIndex,
