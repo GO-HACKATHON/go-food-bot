@@ -73,5 +73,37 @@ describe("GofoodBot", function () {
                 chai_1.assert.equal(replyMessageModel.followingMessages[0].Message, "SHOW_FOOD_MENU", "followingMessages[0].Message");
             });
         });
+        it('maps Ini menu bakso with SHOW_FOOD_MENU command', function () {
+            return __awaiter(this, void 0, void 0, function* () {
+                let bot = models_1.GofoodBot.Create();
+                bot.menuQueryExecutor = {
+                    query(queryText) {
+                        let foodMenu = new models_1.FoodMenuModel("Bubur", "", 10000, null);
+                        return Rx.Observable.from([[foodMenu]]);
+                    }
+                };
+                let replyMessageModel = yield bot.mapBotReplyToMessageModel("Ini menu bakso", new models_1.UserModel()).toPromise();
+                chai_1.assert.equal(replyMessageModel.Message, `Ini menu bakso`);
+                chai_1.assert.equal(replyMessageModel.MessageType, models_1.MessageTypes.RegularText);
+                chai_1.assert.equal(replyMessageModel.followingMessages.length, 1, "followingMessages.length");
+                chai_1.assert.equal(replyMessageModel.followingMessages[0].Message, "SHOW_FOOD_MENU", "followingMessages[0].Message");
+            });
+        });
+        it('maps Ini daftar bakso with SHOW_FOOD_MENU command', function () {
+            return __awaiter(this, void 0, void 0, function* () {
+                let bot = models_1.GofoodBot.Create();
+                bot.menuQueryExecutor = {
+                    query(queryText) {
+                        let foodMenu = new models_1.FoodMenuModel("Bubur", "", 10000, null);
+                        return Rx.Observable.from([[foodMenu]]);
+                    }
+                };
+                let replyMessageModel = yield bot.mapBotReplyToMessageModel("Ini daftar bakso", new models_1.UserModel()).toPromise();
+                chai_1.assert.equal(replyMessageModel.Message, `Ini daftar bakso`);
+                chai_1.assert.equal(replyMessageModel.MessageType, models_1.MessageTypes.RegularText);
+                chai_1.assert.equal(replyMessageModel.followingMessages.length, 1, "followingMessages.length");
+                chai_1.assert.equal(replyMessageModel.followingMessages[0].Message, "SHOW_FOOD_MENU", "followingMessages[0].Message");
+            });
+        });
     });
 });

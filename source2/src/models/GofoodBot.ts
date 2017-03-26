@@ -98,6 +98,50 @@ export class GofoodBot{
         
     }
 
+    protected mapToSHOW_DISHES_TYPES(botReply:string, botUser:UserModel, subscriber:any){
+        let replyModel = new MessageModel(botReply, MessageTypes.RegularText, botUser);
+        
+
+        let commandMessage:MessageModel = new MessageModel("SHOW_DISHES_TYPES", MessageTypes.Command, botUser);
+        replyModel.followingMessages.push(commandMessage);
+
+        this.dishesTypeRetriever.getDishesTypes()
+                .map((dishesTypesData:DishesTypeModel[]) => {
+                    this.dishesTypes = dishesTypesData;
+                    commandMessage.data = dishesTypesData;
+
+                    return commandMessage;
+                })
+                .subscribe(() => {
+                    subscriber.next(replyModel);
+                    subscriber.complete();                                
+                })        
+    }
+
+    protected mapToSHOW_FOOD_MENU(prefixPattern:string, botReply:string, botUser:UserModel, subscriber:any, replyPrefix:string = "Ini menu"){
+        let queryText:string = botReply.substr(prefixPattern.length).trim();
+        let replyModel = new MessageModel(botReply, MessageTypes.RegularText, botUser);
+
+
+        this.menuQueryExecutor.query(queryText)
+            .map((results:FoodMenuModel[]) => {
+                if(results.length > 0){
+                    replyModel.Message = `${replyPrefix} ${queryText}`;
+
+                    let commandMessage:MessageModel = new MessageModel("SHOW_FOOD_MENU", MessageTypes.Command, botUser);
+                    commandMessage.data = results;
+                    replyModel.followingMessages.push(commandMessage);
+                }
+                else{
+                    replyModel.Message = `Ma'af saya belum punya data ${queryText}`;
+                }
+            })
+            .subscribe(() => {
+                subscriber.next(replyModel);
+                subscriber.complete();                                
+            })
+    }
+
     protected mapBotReplyToMessageModel(botReply:string, botUser:UserModel):Rx.Observable<MessageModel>{
 
         let replyObservable:Rx.Observable<MessageModel> = Rx.Observable.create(s => {
@@ -106,97 +150,16 @@ export class GofoodBot{
                 let replyModel:MessageModel = null;
 
                 if(botReply.startsWith("OK! Ini menunya:") || botReply.startsWith("Baiklah! Ini menu yang kita punya:")){
-                    replyModel = new MessageModel(botReply, MessageTypes.RegularText, botUser);
-                    
-
-                    let commandMessage:MessageModel = new MessageModel("SHOW_DISHES_TYPES", MessageTypes.Command, botUser);
-                    replyModel.followingMessages.push(commandMessage);
-
-                    this.dishesTypeRetriever.getDishesTypes()
-                            .map((dishesTypesData:DishesTypeModel[]) => {
-                                this.dishesTypes = dishesTypesData;
-                                commandMessage.data = dishesTypesData;
-
-                                return commandMessage;
-                            })
-                            .subscribe(() => {
-                                s.next(replyModel);
-                                s.complete();                                
-                            })
-                    
-
+                    this.mapToSHOW_DISHES_TYPES(botReply, botUser, s);
                 }
                 else if(botReply.startsWith("Ini list menu")){
-                    let queryText:string = botReply.substr("Ini list menu".length).trim();
-                    replyModel = new MessageModel(botReply, MessageTypes.RegularText, botUser);
-
-
-                    this.menuQueryExecutor.query(queryText)
-                        .map((results:FoodMenuModel[]) => {
-                            if(results.length > 0){
-                                replyModel.Message = `Ini menu ${queryText}`;
-
-                                let commandMessage:MessageModel = new MessageModel("SHOW_FOOD_MENU", MessageTypes.Command, botUser);
-                                commandMessage.data = results;
-                                replyModel.followingMessages.push(commandMessage);
-                            }
-                            else{
-                                replyModel.Message = `Ma'af saya belum punya data ${queryText}`;
-                            }
-                        })
-                        .subscribe(() => {
-                            s.next(replyModel);
-                            s.complete();                                
-                        })
+                    this.mapToSHOW_FOOD_MENU("Ini list menu", botReply, botUser, s);
                 }                                
                 else if(botReply.startsWith("Ini menu")){
-                    let queryText:string = botReply.substr("Ini menu".length);
-                    replyModel = new MessageModel(botReply, MessageTypes.RegularText, botUser);
-
-
-                    this.menuQueryExecutor.query(queryText)
-                        .map((results:FoodMenuModel[]) => {
-                            if(results.length > 0){
-                                replyModel.Message = `Ini menu ${queryText}`;
-
-                                let commandMessage:MessageModel = new MessageModel("SHOW_FOOD_MENU", MessageTypes.Command, botUser);
-                                commandMessage.data = results;
-                                replyModel.followingMessages.push(commandMessage);
-                            }
-                            else{
-                                replyModel.Message = `Ma'af saya belum punya data ${queryText}`;
-                            }
-                            
-                        })
-                        .subscribe(() => {
-                            s.next(replyModel);
-                            s.complete();                                
-                        })
-                    
+                    this.mapToSHOW_FOOD_MENU("Ini menu", botReply, botUser, s);                    
                 }
-                else if(botReply.startsWith("Ini daftar")){
-                    let queryText:string = botReply.substr("Ini daftar".length);
-                    replyModel = new MessageModel(botReply, MessageTypes.RegularText, botUser);
-
-
-                    this.menuQueryExecutor.query(queryText)
-                        .map((results:FoodMenuModel[]) => {
-                            if(results.length > 0){
-                                replyModel.Message = `Ini daftar ${queryText}`;
-
-                                let commandMessage:MessageModel = new MessageModel("SHOW_FOOD_MENU", MessageTypes.Command, botUser);
-                                commandMessage.data = results;
-                                replyModel.followingMessages.push(commandMessage);
-                            }
-                            else{
-                                replyModel.Message = `Ma'af saya belum punya data ${queryText}`;
-                            }                                                        
-                        })
-                        .subscribe(() => {
-                            s.next(replyModel);
-                            s.complete();                                
-                        })
-                    
+                else if(botReply.startsWith("Ini daftar")){                    
+                    this.mapToSHOW_FOOD_MENU("Ini daftar", botReply, botUser, s, "Ini daftar");                         
                 }
                 else if(botReply.startsWith("Maaf saya tidak mengerti")){
                     let queryText:string = botReply.substr("Maaf saya tidak mengerti".length);

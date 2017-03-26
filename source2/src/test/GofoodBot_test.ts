@@ -77,6 +77,44 @@ describe("GofoodBot", function(){
             assert.equal(replyMessageModel.followingMessages.length, 1, "followingMessages.length");
             assert.equal(replyMessageModel.followingMessages[0].Message, "SHOW_FOOD_MENU", "followingMessages[0].Message");
         })
+
+        it('maps Ini menu bakso with SHOW_FOOD_MENU command', async function(){
+            let bot:GofoodBot = GofoodBot.Create();
+
+            (bot as any).menuQueryExecutor = {
+                query(queryText):Rx.Observable<FoodMenuModel[]>{
+                    let foodMenu:FoodMenuModel = new FoodMenuModel("Bubur", "", 10000, null);
+
+                    return Rx.Observable.from([[foodMenu]]);
+                }
+            }
+
+            let  replyMessageModel:MessageModel =  await (bot as any).mapBotReplyToMessageModel("Ini menu bakso", new UserModel()).toPromise();
+
+            assert.equal(replyMessageModel.Message,`Ini menu bakso`);
+            assert.equal(replyMessageModel.MessageType, MessageTypes.RegularText);
+            assert.equal(replyMessageModel.followingMessages.length, 1, "followingMessages.length");
+            assert.equal(replyMessageModel.followingMessages[0].Message, "SHOW_FOOD_MENU", "followingMessages[0].Message");
+        })
+
+        it('maps Ini daftar bakso with SHOW_FOOD_MENU command', async function(){
+            let bot:GofoodBot = GofoodBot.Create();
+
+            (bot as any).menuQueryExecutor = {
+                query(queryText):Rx.Observable<FoodMenuModel[]>{
+                    let foodMenu:FoodMenuModel = new FoodMenuModel("Bubur", "", 10000, null);
+
+                    return Rx.Observable.from([[foodMenu]]);
+                }
+            }
+
+            let  replyMessageModel:MessageModel =  await (bot as any).mapBotReplyToMessageModel("Ini daftar bakso", new UserModel()).toPromise();
+
+            assert.equal(replyMessageModel.Message,`Ini daftar bakso`);
+            assert.equal(replyMessageModel.MessageType, MessageTypes.RegularText);
+            assert.equal(replyMessageModel.followingMessages.length, 1, "followingMessages.length");
+            assert.equal(replyMessageModel.followingMessages[0].Message, "SHOW_FOOD_MENU", "followingMessages[0].Message");
+        })
         
     })
     
