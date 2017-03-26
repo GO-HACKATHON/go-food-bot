@@ -1,0 +1,26 @@
+! version = 2.0
+
+// Bot variables
+! var name = Go-Food Bot
+! var age  = 25
+
+// Substitutions
+! sub harganay = harganya
+! sub hargany = harganya
+! sub hrganya = harganya
+
+! sub diatas = di atas
+! sub lebih dari = di atas
+! sub lebih = di atas
+! sub over = di atas
+
+! sub dibawah = di bawah
+! sub kurang dari = di bawah
+! sub kurang = di bawah
+! sub less = di bawah
+! sub below = di bawah
+
+! sub menuu = menu
+
+! sub list = lihat
+! sub liat = lihat

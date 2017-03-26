@@ -20,6 +20,7 @@ declare let require:any;
 const RiveScript = require("rivescript");
 
 const BrainFiles = [
+    "assets/brain/begin.rive",
     "assets/brain/greetings.rive",
     "assets/brain/menu.rive",
     "assets/brain/free-ongkir.rive",
@@ -127,6 +128,29 @@ export class GofoodBot{
                     
 
                 }
+                else if(botReply.startsWith("Ini list menu")){
+                    let queryText:string = botReply.substr("Ini list menu".length);
+                    replyModel = new MessageModel(botReply, MessageTypes.RegularText, botUser);
+
+
+                    this.menuQueryExecutor.query(queryText)
+                        .map((results:FoodMenuModel[]) => {
+                            if(results.length > 0){
+                                replyModel.Message = `Ini menu ${queryText}`;
+
+                                let commandMessage:MessageModel = new MessageModel("SHOW_FOOD_MENU", MessageTypes.Command, botUser);
+                                commandMessage.data = results;
+                                replyModel.followingMessages.push(commandMessage);
+                            }
+                            else{
+                                replyModel.Message = `Ma'af saya belum punya data ${queryText}`;
+                            }
+                        })
+                        .subscribe(() => {
+                            s.next(replyModel);
+                            s.complete();                                
+                        })
+                }                                
                 else if(botReply.startsWith("Ini menu")){
                     let queryText:string = botReply.substr("Ini menu".length);
                     replyModel = new MessageModel(botReply, MessageTypes.RegularText, botUser);
@@ -134,11 +158,17 @@ export class GofoodBot{
 
                     this.menuQueryExecutor.query(queryText)
                         .map((results:FoodMenuModel[]) => {
-                            let commandMessage:MessageModel = new MessageModel("SHOW_FOOD_MENU", MessageTypes.Command, botUser);
-                            commandMessage.data = results;
-                            replyModel.followingMessages.push(commandMessage);
+                            if(results.length > 0){
+                                replyModel.Message = `Ini menu ${queryText}`;
+
+                                let commandMessage:MessageModel = new MessageModel("SHOW_FOOD_MENU", MessageTypes.Command, botUser);
+                                commandMessage.data = results;
+                                replyModel.followingMessages.push(commandMessage);
+                            }
+                            else{
+                                replyModel.Message = `Ma'af saya belum punya data ${queryText}`;
+                            }
                             
-                            console.log("results:", results);
                         })
                         .subscribe(() => {
                             s.next(replyModel);
@@ -153,11 +183,44 @@ export class GofoodBot{
 
                     this.menuQueryExecutor.query(queryText)
                         .map((results:FoodMenuModel[]) => {
-                            let commandMessage:MessageModel = new MessageModel("SHOW_FOOD_MENU", MessageTypes.Command, botUser);
-                            commandMessage.data = results;
-                            replyModel.followingMessages.push(commandMessage);
-                            
-                            console.log("results:", results);
+                            if(results.length > 0){
+                                replyModel.Message = `Ini daftar ${queryText}`;
+
+                                let commandMessage:MessageModel = new MessageModel("SHOW_FOOD_MENU", MessageTypes.Command, botUser);
+                                commandMessage.data = results;
+                                replyModel.followingMessages.push(commandMessage);
+                            }
+                            else{
+                                replyModel.Message = `Ma'af saya belum punya data ${queryText}`;
+                            }                                                        
+                        })
+                        .subscribe(() => {
+                            s.next(replyModel);
+                            s.complete();                                
+                        })
+                    
+                }
+                else if(botReply.startsWith("Maaf saya tidak mengerti")){
+                    let queryText:string = botReply.substr("Maaf saya tidak mengerti".length);
+                    replyModel = new MessageModel(botReply, MessageTypes.RegularText, botUser);
+
+
+                    this.menuQueryExecutor.query(queryText)
+                        .map((results:FoodMenuModel[]) => {
+
+                            if(results.length > 0){
+                                replyModel.Message = `Ini menu ${queryText}`;
+
+                                let commandMessage:MessageModel = new MessageModel("SHOW_FOOD_MENU", MessageTypes.Command, botUser);
+                                commandMessage.data = results;
+
+                                replyModel.followingMessages.push(commandMessage);
+                            }
+                            else{
+                                replyModel.Message = `Ma'af saya belum punya data ${queryText}`;
+                            }
+
+                                                                                    
                         })
                         .subscribe(() => {
                             s.next(replyModel);

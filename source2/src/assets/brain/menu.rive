@@ -3,22 +3,25 @@
 + selain itu [*]
 - Selain itu kamu bisa lihat riwayat pembelianmu
 
-+ lihat (menu|menuu) [yang] (harganya|harganay|hargany) (#|di atas #|diatas #|lebih #|lebih dari #)
-- Ini list menu yang harganya diatas <star>
+//+ lihat menu [yang] harganya (#|di atas #|diatas #|lebih #|lebih dari #)
+//- Ini list menu yang harganya diatas <star>
 
-+ lihat (menu|menuu) [yang] (harganya|harganay|hargany) (#|di bawah #|dibawah #|kurang dari #|kurang #)
-- Ini list menu yang harganya dibawah <star>
+//+ lihat menuu [yang] harganya (#|di atas #)
+//- Ini list menu yang harganya diatas <star>
+
+//+ lihat menu [yang] (harganya|harganay|hargany) (#|di bawah #|dibawah #|kurang dari #|kurang #)
+//- Ini list menu yang harganya dibawah <star>
 
 + kamu punya * apa [*]
 - aku punya <star>
 
++ * di atas #
+- Ini menu <star1> > <star2>
+
++ * di bawah #
+- Ini menu <star1> < <star2>
+
 + lihat menu *
-- Ini menu <star1>
-
-+ liat menu *
-- Ini menu <star1>
-
-+ list menu *
 - Ini menu <star1>
 
 + list *
@@ -27,15 +30,18 @@
 + menu *
 - Ini menu <star1>
 
-
 + menu * apa (saja|aja)
 - Ini menu <star1>
 
-+ (liat|lihat) menu (aja|saja|deh|dong)
++ lihat menu (aja|saja|deh|dong)
 - OK! Ini menunya:
 - Baiklah! Ini menu yang kita punya:
 
-+ (liat|lihat) menunya
++ lihat menunya
+- OK! Ini menunya:
+- Baiklah! Ini menu yang kita punya:
+
++ menu dong
 - OK! Ini menunya:
 - Baiklah! Ini menu yang kita punya:
 
@@ -49,4 +55,4 @@
 - Baiklah! Ini menu yang kita punya:
 
 + *
-- Maaf saya tidak mengerti
+- Maaf saya tidak mengerti <star>
