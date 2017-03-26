@@ -8,7 +8,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "mytest": "cp src/models/fuse.js src/test/lib/models && tsc -p src/test && mocha src/test/lib/test"
   },
   "private": true,
   "dependencies": {
@@ -23,7 +24,6 @@
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/router": "^4.0.0",
     "@types/chai": "^3.4.35",
-    "@types/mocha": "^2.2.40",
     "angular2-onsenui": "^1.0.0-rc.6",
     "chai": "^3.5.0",
     "core-js": "^2.4.1",

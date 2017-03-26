@@ -1,7 +1,8 @@
 "use strict";
-const models_1 = require('../models');
-const chai_1 = require('chai');
-const moment = require('moment');
+Object.defineProperty(exports, "__esModule", { value: true });
+const models_1 = require("../models");
+const chai_1 = require("chai");
+const moment = require("moment");
 describe("MessageModel", function () {
     describe("Creating a new message", function () {
         it("must expect non empty message", function () {

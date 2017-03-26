@@ -44,8 +44,6 @@ export class GofoodBot{
     _initBotBrain():Rx.Observable<void>{
         return Rx.Observable.create(s =>{
             this.botScript.loadFile(BrainFiles, (batch_num) =>{
-                console.log('All brain files, loaded');
-
                 this.botScript.sortReplies();
 
                 s.next();
@@ -129,7 +127,7 @@ export class GofoodBot{
 
                 }
                 else if(botReply.startsWith("Ini list menu")){
-                    let queryText:string = botReply.substr("Ini list menu".length);
+                    let queryText:string = botReply.substr("Ini list menu".length).trim();
                     replyModel = new MessageModel(botReply, MessageTypes.RegularText, botUser);
 
 
